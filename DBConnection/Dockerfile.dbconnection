@@ -1,0 +1,14 @@
+FROM python:3.7
+MAINTAINER Kumar Kunal "kumar.kunal.bd@gmail.com"
+
+LABEL APP="dbconnectiontest"
+
+RUN apt-get update && apt-get -y install openssh-client default-libmysqlclient-dev
+RUN mkdir -p /management_content
+WORKDIR /management_content
+COPY requirements.txt /management_content/
+RUN pip install -r requirements.txt
+COPY . /management_content/
+RUN chmod 744 /management_content/entrypoint.sh
+RUN ls -la
+ENTRYPOINT ["/management_content/entrypoint.sh"]
